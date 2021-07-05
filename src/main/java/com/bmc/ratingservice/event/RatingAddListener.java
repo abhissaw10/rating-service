@@ -21,7 +21,7 @@ public class RatingAddListener {
     private String doctorRatingTopic;
 
     @EventListener
-    void handleRatingAddEvent(RatingAddEvent event){
+    public void handleAddRatingEvent(RatingAddEvent event){
         Double avgRating = ratingsRepository
             .findByDoctorId(event.getDoctorId())
             .stream()
