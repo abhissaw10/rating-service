@@ -34,6 +34,4 @@ public class KafkaConfig {
     public KafkaTemplate<String, AverageRating> kafkaTemplate(){
         return new KafkaTemplate<String, AverageRating>(producerFactory());
     }
-
-
 }

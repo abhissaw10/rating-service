@@ -1,8 +1,7 @@
-package com.upgrad.course.demo.filters;
+package com.bmc.ratingservice.filter;
 
-import com.upgrad.course.demo.model.UserPrincipal;
-import com.upgrad.course.demo.service.TokenProvider;
-import com.upgrad.course.demo.service.UserDetailsServiceImpl;
+import com.bmc.ratingservice.model.UserPrincipal;
+import com.bmc.ratingservice.service.TokenProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,18 +23,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private TokenProvider tokenProvider;
 
-    @Autowired
-    private UserDetailsServiceImpl userDetailsServiceImpl;
-
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain filterChain) throws ServletException, IOException {
         try{
             String jwt = req.getHeader("Authorization");
             if(!StringUtils.isEmpty(jwt) && tokenProvider.validateToken(jwt)) {
                 LOGGER.info("Token is valid! Checking Roles");
-                String userNameInToken = tokenProvider.getUserNameFromToken(jwt);
-                UserPrincipal userPrincipal = userDetailsServiceImpl.loadUserByUsername(userNameInToken);
-                LOGGER.info("Authorities: "+userPrincipal.getAuthorities());
+                UserPrincipal userPrincipal = tokenProvider.getUserNameFromToken(jwt);
                 UsernamePasswordAuthenticationToken authenticationToken =
                         new UsernamePasswordAuthenticationToken(userPrincipal, null, userPrincipal.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);

@@ -1,14 +1,12 @@
-package com.upgrad.course.demo.model;
+package com.bmc.ratingservice.model;
 
-import com.upgrad.course.demo.entity.User;
+import lombok.Builder;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
+@Builder
 public class UserPrincipal implements UserDetails {
 
     private String username;
@@ -56,9 +54,5 @@ public class UserPrincipal implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-    public static UserPrincipal create(User user) {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(user.getRole()));
-        return new UserPrincipal(user.getUsername(),user.getPassword(),authorities);
-    }
+
 }
