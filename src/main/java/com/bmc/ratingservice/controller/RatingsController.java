@@ -15,7 +15,7 @@ public class RatingsController {
 
     private final RatingsService ratingsService;
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/ratings")
     public ResponseEntity submitRatings(@RequestBody Rating rating){
         ratingsService.submitRatings(rating);
